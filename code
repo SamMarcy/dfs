@@ -1,0 +1,40 @@
+class Solution {
+public:
+bool safe(vector<vector<int>>& grid,int i,int j,vector<vector<bool>>&visited){
+    if(i<grid.size()&&j<grid[0].size()&&grid[i][j]==1&&visited[i][j]==false){
+        return true;
+    }
+    return false;
+}
+void dfs(vector<vector<int>>& grid,int i,int j,vector<vector<bool>>&visited,int& count){
+    visited[i][j]=true;
+    count++;
+    if(safe(grid,i+1,j,visited)){
+        dfs(grid,i+1,j,visited,count);
+    }
+    if(safe(grid,i,j+1,visited)){
+        dfs(grid,i,j+1,visited,count);
+    }
+    if(safe(grid,i-1,j,visited)){
+        dfs(grid,i-1,j,visited,count);
+    }
+    if(safe(grid,i,j-1,visited)){
+        dfs(grid,i,j-1,visited,count);
+    }
+}
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        vector<vector<bool>>visited(grid.size(),vector<bool>(grid[0].size(),false));
+        int maxm=0;
+        for(int i=0;i<grid.size();i++){
+            for(int j=0;j<grid[i].size();j++){
+                if(grid[i][j]==1&&visited[i][j]==false){
+                    int count=0;
+                    dfs(grid,i,j,visited,count);
+                    maxm=max(maxm,count);
+                }
+            }
+        }
+
+        return maxm;
+    }
+};
